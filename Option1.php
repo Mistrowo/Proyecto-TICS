@@ -1,6 +1,6 @@
 <?php 
 session_start();
-include_once("header.php")
+include_once("header.php");
 ?>
 <!doctype html>
   <head>
@@ -25,16 +25,36 @@ include_once("header.php")
     <link href="form-validation.css" rel="stylesheet">
   </head>
   <body class="bg-light">
-    
 <div class="container">
   <main>
     <div class="py-5 text-center">
-    <a href="index.php"> <img src="img/lol.jfif" width="800" height="300" class="me-2" viewBox="0 0 118 94" role="img"></a>
+      <?php
+      if(isset($_POST['Ahorro'])){
+        if($_POST['Ahorro'] > 0 || $_POST['Sueldo'] > 0){
+      ?>
+      
+         <a href="index.php"> <img src="img/logo2.jfif" width="100" height="70" class="me-2" viewBox="0 0 118 94" role="img"></a>
+         <?php
+      }else{
+      ?>
+    <a href="index.php"> <img src="img/logo.jfif" width="65" height="70" class="me-2" viewBox="0 0 118 94" role="img"></a>
+    <?php } ?>
+    <?php
+      }else{
+      ?>
+    <a href="index.php"> <img src="img/logo.jfif" width="65" height="70" class="me-2" viewBox="0 0 118 94" role="img"></a>
+    <?php } ?>
       <h2>Calculadora Jubilacion Automatica Programada</h2>
       <p class="lead">Complete los datos pedidos para poder mostrarle su posible futura pension.</p>
     </div>
+    <!--Revisa si hay datos ingresados y muestra resultados si hay-->
 <?php
-  if(isset($_POST['Ahorro'])){ ?>
+  if(isset($_POST['Ahorro'])){
+    #Revisar si se pusieron bien los saldos, en el caso contrario necesitara reingresarlos
+    if($_POST['Ahorro'] > 0 || $_POST['Sueldo'] > 0){ 
+      #Se incluye la parte de calculos y da los resultados
+      include_once("calculos.php");
+      ?>
     <div class="row g-5">
       <div class="col-md-5 col-lg-4 order-md-last">
         <h4 class="d-flex justify-content-between align-items-center mb-3">
@@ -54,14 +74,14 @@ include_once("header.php")
               <h6 class="my-0">Tipo de Fondo</h6>
               <small class="text-muted">Seleccionado</small>
             </div>
-            <span class="text-muted"><?php echo $_POST['Fondo'] ?></span>
+            <span class="text-muted"><?php echo $Fondos[$_POST['Fondo']] ?></span>
           </li>
           <li class="list-group-item d-flex justify-content-between lh-sm">
             <div>
               <h6 class="my-0">Pension Mensual</h6>
               <small class="text-muted">Al jubirlarse</small>
             </div>
-            <span class="text-muted">$320000</span>
+            <span class="text-muted"><?php echo (int)$pension; ?></span>
           </li>
           <li class="list-group-item d-flex justify-content-between lh-sm">
             <div>
@@ -72,30 +92,41 @@ include_once("header.php")
           </li>
           <li class="list-group-item d-flex justify-content-between">
             <span>Monto Total al Jubilarse</span>
-            <strong>$200000000</strong>
+            <strong><?php echo (int)$total_ahorro; ?></strong>
           </li>
         </ul>
       </div>
       <div class="col-md-7 col-lg-8">
 <?php
-      } ?>
+      }else{
+        ?> <h4>Ingrese los datos correctamente</h4> <?php
+        } } ?>
 
 
-      
+      <!--Pedir datos al usuario -->
         <h4 class="mb-3"> Datos </h4>
         <form method="POST" action="Option1.php">
           <div class="row g-3">
             <div class="col-12">
               <label for="firstName" class="form-label">Ahorro Actual en AFP</label>
-              <input name="Ahorro" type="number" class="form-control" id="Ahorro" placeholder="Ingrese Monto" value="" required>
+              <input name="Ahorro" type="number" class="form-control" placeholder="Ingrese Monto" value="" required>
+            </div>
+
+            <div class="col-12">
+              <label for="firstName" class="form-label">Sueldo Actual</label>
+              <input name="Sueldo" type="number" class="form-control" placeholder="Ingrese Sueldo" value="" required>
             </div>
 
             <div class="col-sm-6">
               <label for="firstName" class="form-label">AFP</label>
                 <select name="AFP" class="custom-select" required>
                   <option selected value="">Elegir...*</option>
-                  <option value="Capital">Capital</option>
-                  <option value="Provida">ProVida</option>
+                  <option value="capital">Capital</option>
+                  <option value="provida">ProVida</option>
+                  <option value="cuprum">Cuprum</option>
+                  <option value="habitat">Habitat</option>
+                  <option value="planvital">PlanVital</option>
+                  <option value="sistema">Sistema</option>
                 </select>
             </div>
             
@@ -103,12 +134,11 @@ include_once("header.php")
               <label for="firstName" class="form-label">Tipo de Fondo</label>
                 <select name="Fondo" class="custom-select" required>
                   <option selected value="">Elegir...*</option>
-                  <option value="A">A</option>
-                  <option value="B">B</option>
-                  <option value="C">C</option>
-                  <option value="D">D</option>
-                  <option value="E">E</option>
-                  <option value="F">F</option>
+                  <option value="0">A</option>
+                  <option value="1">B</option>
+                  <option value="2">C</option>
+                  <option value="3">D</option>
+                  <option value="4">E</option>
                 </select>
             </div>
 
@@ -116,8 +146,8 @@ include_once("header.php")
               <label for="firstName" class="form-label">Sexo</label>
                 <select name="Sexo" class="custom-select" required> 
                   <option selected value="">Elegir...*</option>
-                  <option value="1">Femenino</option>
-                  <option value="2">Masculino</option>
+                  <option value="Femenino">Femenino</option>
+                  <option value="Masculino">Masculino</option>
                 </select>
             </div>
 

@@ -1,3 +1,16 @@
+<?php 
+  $Fondos = ["A","B","C","D","E"];
+  $AFP = array(
+    "capital" => [6.205, 5.415, 4.885, 4.375, 3.785],
+    "cuprum" => [6.2, 5.42, 5.115, 4.52, 3.645],
+    "habitat" => [6.305, 5.55, 5.305, 4.64, 3.87],
+    "planvital" => [5.855, 5.195, 4.795, 4, 3.035],
+    "provida" => [6.27, 5.225, 4.745, 4.165, 3.34],
+    "sistema" => [6.24, 5.395, 5.015, 4.38, 3.675]
+  );
+
+?>
+
 <meta charset="utf-8" />
 <!-- CSS only -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
