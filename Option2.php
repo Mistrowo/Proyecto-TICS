@@ -30,7 +30,7 @@ include_once("header.php");
     <div class="py-5 text-center">
       <?php
       if(isset($_POST['Ahorro'])){
-        if($_POST['Ahorro'] > 0 || $_POST['Sueldo'] > 0){
+        if($_POST['Ahorro'] > 0 && $_POST['Sueldo'] > 0 && $_POST['Pension'] > 0){
       ?>
       
          <a href="index.php"> <img src="img/logo2.jfif" width="100" height="70" class="me-2" viewBox="0 0 118 94" role="img"></a>
@@ -51,8 +51,9 @@ include_once("header.php");
 <?php
   if(isset($_POST['Ahorro'])){
     #Revisar si se pusieron bien los saldos, en el caso contrario necesitara reingresarlos
-    if($_POST['Ahorro'] > 0 || $_POST['Sueldo'] > 0){ 
+    if($_POST['Ahorro'] > 0 && $_POST['Sueldo'] > 0 && $_POST['Pension'] > 0){ 
       #Se incluye la parte de calculos y da los resultados
+      $pensionX =TRUE;
       include_once("calculos.php");
       ?>
     <div class="row g-5">
@@ -78,17 +79,24 @@ include_once("header.php");
           </li>
           <li class="list-group-item d-flex justify-content-between lh-sm">
             <div>
+              <h6 class="my-0">Ahorro total voluntario</h6>
+              <small class="text-muted">Al jubirlarse</small>
+            </div>
+            <span class="text-muted"><?php echo (int)$AhorroVolun; ?></span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between lh-sm">
+            <div>
               <h6 class="my-0">Pension Mensual</h6>
               <small class="text-muted">Al jubirlarse</small>
             </div>
-            <span class="text-muted"><?php echo (int)$pension; ?></span>
+            <span class="text-muted"><?php echo (int)$_POST['Pension']; ?></span>
           </li>
           <li class="list-group-item d-flex justify-content-between lh-sm">
             <div>
               <h6 class="my-0">APV</h6>
-              <small class="text-muted">Dinero adicional</small>
+              <small class="text-muted">Dinero adicional voluntario</small>
             </div>
-            <span class="text-muted">$0</span>
+            <span class="text-muted"><?php echo (int)$apv; ?></span>
           </li>
           <li class="list-group-item d-flex justify-content-between">
             <span>Monto Total al Jubilarse</span>
@@ -105,7 +113,7 @@ include_once("header.php");
 
       <!--Pedir datos al usuario -->
         <h4 class="mb-3"> Datos </h4>
-        <form method="POST" action="Option1.php">
+        <form method="POST" action="Option2.php">
           <div class="row g-3">
             <div class="col-12">
               <label for="firstName" class="form-label">Ahorro Actual en AFP</label>
@@ -118,8 +126,8 @@ include_once("header.php");
             </div>
 
             <div class="col-12">
-              <label for="firstName" class="form-label">Pension que quieras tener a futuro(Mensual)</label>
-              <input name="APV" type="number" class="form-control" placeholder="Ingrese Monto" value="" required>
+              <label for="firstName" class="form-label">Pension Deseada al Jubilarse</label>
+              <input name="Pension" type="number" class="form-control" placeholder="Ingrese Pension Deseada" value="" required>
             </div>
 
             <div class="col-sm-6">

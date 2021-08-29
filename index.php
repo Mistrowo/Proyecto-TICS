@@ -26,7 +26,7 @@ include_once("header.php")
         <div class="h-100 p-5 text-white bg-dark rounded-3">
           <h2>Jubilacion de monto Particular</h2>
           <p>Acá se puede consultar cuanto APV necesitas para tener una pension digna.</p>
-          <button class="btn btn-outline-light" type="button">Presiona Aquí</button>
+          <button class="btn btn-outline-light" type="button"><a href="Option2.php" style="color:white"> Presiona Aquí </a></button>
         </div>
       </div>
       <div class="col-md-6">

@@ -30,7 +30,7 @@ include_once("header.php");
     <div class="py-5 text-center">
       <?php
       if(isset($_POST['Ahorro'])){
-        if($_POST['Ahorro'] > 0 || $_POST['Sueldo'] > 0){
+        if($_POST['Ahorro'] > 0 && $_POST['Sueldo'] > 0){
       ?>
       
          <a href="index.php"> <img src="img/logo2.jfif" width="100" height="70" class="me-2" viewBox="0 0 118 94" role="img"></a>
@@ -51,8 +51,9 @@ include_once("header.php");
 <?php
   if(isset($_POST['Ahorro'])){
     #Revisar si se pusieron bien los saldos, en el caso contrario necesitara reingresarlos
-    if($_POST['Ahorro'] > 0 || $_POST['Sueldo'] > 0){ 
+    if($_POST['Ahorro'] > 0 && $_POST['Sueldo'] > 0){ 
       #Se incluye la parte de calculos y da los resultados
+      $pensionX = FALSE;
       include_once("calculos.php");
       ?>
     <div class="row g-5">

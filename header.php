@@ -1,4 +1,5 @@
 <?php 
+  #Arreglos con datos sobre fondos y afp
   $Fondos = ["A","B","C","D","E"];
   $AFP = array(
     "capital" => [6.205, 5.415, 4.885, 4.375, 3.785],
