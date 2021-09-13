@@ -2,40 +2,42 @@
     # Cantidad de meses restantes de cotizacion según género
     $tiempo_trabajo = 0;
     if($_POST['Sexo'] == 'Masculino'){
-        $tiempo_trabajo = (65 - $_POST['Edad'])*12;
+        $tiempo_trabajo = 65 - $_POST['Edad'];
     }else if($_POST['Sexo'] == 'Femenino'){
-        $tiempo_trabajo = (60 - $_POST['Edad'])*12;
+        $tiempo_trabajo = 60 - $_POST['Edad'];
     }
+    # Cotizaciones = 10% del sueldo
+    $cotizaciones = ($_POST['Sueldo']*0.1)*12;
+
+    #Inicializar variables para condiciones
+    $FondA = false;
+    $Fondox = $_POST['Fondo'];
+    $ahorros_afp = $_POST['Ahorro'];
     
-    # Cotizaciones = 10% del sueldo * cantidad de meses de trabajo restantes
-    $cotizaciones = ($_POST['Sueldo']*0.1)*$tiempo_trabajo;
+    #En el caso de ser fondo A
+    if($Fondox == 0){
+        $FondA = true;
+        $Fondox = 1;
+        $tiempo_trabajo = $tiempo_trabajo - 10;     
+    }
 
     # Calculo de ahorros
-    if($_POST['Fondo'] != 0){
+    for($i = 0; $i < $tiempo_trabajo ; $i++){
         # Ahorros de usuarios sin cambio de fondos
-        $ahorros_afp = $cotizaciones + $_POST['Ahorro'];
-        $final_afp = $ahorros_afp + $ahorros_afp*$AFP[$_POST['AFP']][$_POST['Fondo']]/100;
-    }else{
-        # Ahorro de usuarios con cambio de Fondo A hacia B
-        if($_POST['Sexo'] = 'Masculino'){
-            $tiempo_trabajo = (55-$_POST['Edad'])*12;
-        }else if($_POST['Sexo'] = 'Femenino'){
-            $tiempo_trabajo = (50-$_POST['Edad'])*12;
-        }
-        # Cálculo de ahorro antes de cambiar fondo
-        $cotizaciones_A = ($_POST['Sueldo']*0.1)*$tiempo_trabajo;
-        $ahorros_fondo_A = $cotizaciones_A + $_POST['Ahorro'];
-        $final_fondo_A = $ahorros_fondo_A + $ahorros_fondo_A*($AFP[$_POST['AFP']][$_POST['Fondo']]/100);
-
-        # Cálculo de ahorro despues de cambiar fondo
-        $tiempo_trabajo = 120;
-        $cotizaciones_B = ($_POST['Sueldo']*0.1)*$tiempo_trabajo;
-        $ahorros_fondo_B = $cotizaciones_B + $final_fondo_A ;
-        $final_afp = $ahorros_fondo_B + $ahorros_fondo_B*($AFP[$_POST['AFP']][1]/100);
+        $ahorros_afp = $cotizaciones + $ahorros_afp;
+        $ahorros_afp = $ahorros_afp + $ahorros_afp*$AFP[$_POST['AFP']][$_POST['Fondo']]/100;
     }
+    if($FondA){
+        for($i =0; $i < 10 ; $i++){
+            $ahorros_afp = $cotizaciones + $ahorros_afp;
+            $ahorros_afp = $ahorros_afp + $ahorros_afp*$AFP[$_POST['AFP']][1]/100;
+        }
+    }
+    $final_afp = $ahorros_afp;
+
     # Monto final ahorrado
     $total_ahorro = $final_afp;
-    
+        
     # Cálculo de pensión
     if($_POST['Sexo'] = 'Masculino'){
         $tiempo_pension = 15*12; # asumiendo que la esperanza de vida en chile para un hombre es de 80 años y se jubila a los 65
@@ -44,8 +46,6 @@
         $tiempo_pension = 25*12; # asumiendo que la esperanza de vida en chile para una mujer es de 85 años  y se jubila a los 60
     }
     $pension = $total_ahorro/$tiempo_pension;
-
-
 
 #Obtiene monto de Apv necesario para alcanzar la pensión deseada
 
